@@ -14,8 +14,7 @@ $content = '';
 $lastYear = 0;
 $lastMonth = 0;
 
-foreach($files as $file)
-{
+foreach ($files as $file) {
     /**
      * 获取日期信息
      */
@@ -38,8 +37,7 @@ foreach($files as $file)
     $monday = $date->modify('monday this week')->format('n月j日');
     $sunday = $date->modify('sunday this week')->format('n月j日');
 
-    if($year != $lastYear || $month != $lastMonth)
-    {
+    if ($year != $lastYear || $month != $lastMonth) {
         $lastYear = $year;
         $lastMonth = $month;
         if ($content != '') {

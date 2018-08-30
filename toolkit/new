@@ -17,7 +17,7 @@ $date = new DateTime(
 $file = $config['directory'] . DIRECTORY_SEPARATOR . $date->format($config['file_name']) . $config['file_extension'];
 echo $file . PHP_EOL;
 
-if(file_exists($file)) {
+if (file_exists($file)) {
     echo 'File already exists!' . PHP_EOL;
     exit(127);
 }

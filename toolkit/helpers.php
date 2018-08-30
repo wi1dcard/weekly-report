@@ -37,7 +37,7 @@ function translate_file_changes($stat)
 function table_format_row($cols, $widths, $tab = '  ', $separator = ' | ')
 {
     $rowContent = $tab . ltrim($separator);
-    foreach($cols as $index => $col) {
+    foreach ($cols as $index => $col) {
         $rowContent .= ($index == 0) ? '' : $separator;
         $spaces = $widths[$index] - mb_strwidth($col);
         $rowContent .= str_repeat(' ', $spaces) . $col;
