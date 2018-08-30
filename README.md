@@ -1,6 +1,6 @@
-# Write Weekly Report Coders' Way!
+# Write Weekly Reports Coders' Way!
 
-⬆️ That's my idea.
+⬆️ That's my idea. [GitHub](https://github.com/wi1dcard/weekly-report) / [Gitee](https://gitee.com/wi1dcard/weekly-report)
 
 提取 Git 提交记录快速生成 Markdown 格式的日报 / 周报，旨在帮助像我这样健忘的程序员们快速编排工作记录😂。
 
@@ -27,12 +27,12 @@ php toolkit/new
 接下来打开此配置文件，找到最下方 `projects`。简单配置一下，当然你可以填很多项目。
 
 ```php
-    // ...
-    'projects' => [
-        '一个惊世骇俗的项目' => [ // 按需修改
-            'path' => realpath('Git 仓库本地目录'), // 按需修改
-        ],
-    ]
+// ...
+'projects' => [
+    '一个惊世骇俗的项目' => [ // 按需修改
+        'path' => realpath('Git 仓库本地目录'), // 按需修改
+    ],
+]
 ```
 
 好了，想想你今天在这个项目提交了啥。今天没有提交？那昨天也行。
@@ -48,7 +48,7 @@ php toolkit/today -2 # 生成前天日报
 
 生成的表格已经格式化过，直接复制粘贴进周报模板即可。
 
-随着时间越来越久，你需要一个规范易读的目录，而不是天天盯着 `****W**` 脑补这是几月份的来着？
+随着时间越来越久，你需要一个规范易读的目录，而不是盯着 `****W**` 脑补这是几月份的来着？
 
 ```bash
 php toc
