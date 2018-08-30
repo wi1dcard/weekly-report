@@ -1,10 +1,10 @@
 # Write Weekly Reports Coders' Way!
 
-⬆️ That's my idea. [GitHub](https://github.com/wi1dcard/weekly-report) / [Gitee](https://gitee.com/wi1dcard/weekly-report)
+⬆️ That's my idea. [GitHub](https://github.com/wi1dcard/weekly-report) / [Gitee](https://gitee.com/wi1dcard/weekly-report).
 
-提取 Git 提交记录快速生成 Markdown 格式的日报 / 周报，旨在帮助像我这样健忘的程序员们快速编排工作记录😂。
+🔧 提取 Git 提交记录快速生成 Markdown 格式的日报 / 周报，旨在帮助像我这样健忘的程序员们快速编排工作记录。
 
-这不是个规范的项目，但是个实用的小玩意。
+⚠️ 这不是个规范的项目，但是个实用的小玩意。
 
 ## 效果
 
@@ -24,7 +24,7 @@ php toolkit/new
 
 此文件名可以直接被 PHP 由字符串转换为时间，你可以修改 `toolkit/config.php` 的配置实现自定义。
 
-接下来打开此配置文件，找到最下方 `projects`。简单配置一下，当然你可以填很多项目。
+接下来打开此配置文件，找到最下方 `projects`，配置你的项目。
 
 ```php
 // ...
@@ -44,9 +44,9 @@ php toolkit/today -2 # 生成前天日报
 # ... 以此类推
 ```
 
-![](https://i.loli.net/2018/08/30/5b8785bf604a7.png)
+生成的表格已被格式化，如下所示。直接复制粘贴进周报模板即可。
 
-生成的表格已经格式化过，直接复制粘贴进周报模板即可。
+![](https://i.loli.net/2018/08/30/5b8785bf604a7.png)
 
 随着时间越来越久，你需要一个规范易读的目录，而不是盯着 `****W**` 脑补这是几月份的来着？
 
@@ -94,7 +94,7 @@ php toc
 - macOS 用户可使用 [MacDown](https://github.com/MacDownApp/macdown)。
 - VS Code 用户可使用 [Markdown PDF](https://github.com/yzane/vscode-markdown-pdf)，此工具目前缺少维护，存在一定问题。
 
-我目前使用后者，VS Code 项目配置参见 <https://wi1dcard.cn/projects/weekly-report-toolkit>。
+我目前使用后者，VS Code 项目配置参见 [这里](https://wi1dcard.cn/projects/weekly-report-toolkit)。
 
 建议选择能够自定义 CSS 的转换工具，便于调整样式，不然渲染出来的表格可能会很难看。
 
