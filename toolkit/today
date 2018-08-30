@@ -1,0 +1,104 @@
+#!/usr/bin/env php
+<?php
+
+use GitWrapper\GitWorkingCopy;
+
+require 'vendor/autoload.php';
+
+$config = require 'config.php';
+$author = $config['author'];
+$projects = $config['projects'];
+
+/**
+ * 初始化
+ */
+date_default_timezone_set('PRC');
+$gitWrapper = new GitWrapper\GitWrapper();
+$content = '';
+
+/**
+ * 计算日期
+ */
+$logDate = isset($argv[1]) ? date('Y-m-d', strtotime($argv[1] . ' day')) : '';
+
+foreach ($projects as $key => $project) {
+    /**
+     * 初始化配置
+     */
+    $projectPath = $project['path'];
+    $projectUrl = $project['url'] ?? '';
+    $pathspec = $project['pathspec'] ?? '';
+
+    /**
+     * Git log
+     */
+    $fullText = $gitWrapper->git(
+        "log --pretty=format:'%h|%ai|%s' --branches --no-merges --author={$author} --after='{$logDate} 00:00:00' --until='{$logDate} 23:59:59' --reverse --shortstat -- . '{$pathspec}'",
+        $projectPath
+    );
+    
+    if (empty($fullText)) {
+        continue;
+    }
+    
+    /**
+     * 表头
+     */
+    $table = [];
+    $table[] = ['时间', '内容', '工作量'];
+
+    /**
+     * 分离提交日志
+     */
+    $logs = explode("\n\n", $fullText);
+
+    /**
+     * 提取表格
+     */
+    $widths = [];
+    foreach ($logs as $log) {
+        $lines = explode("\n", $log);
+        $pieces = explode('|', $lines[0]);
+        $stat = translate_file_changes($lines[1]);
+
+        $commitId = $pieces[0];
+        $datetime = date('H点i分', strtotime($pieces[1]));
+        $message = $pieces[2];
+        
+        if (is_callable($projectUrl)) {
+            $projectUrl = $projectUrl($projectPath);
+        }
+
+        if (!empty($projectUrl)) {
+            $link = "$projectUrl/commit/$commitId";
+            $message = "[$message]($link)";
+        }
+
+        $row = [$datetime, $message, $stat];
+        foreach ($row as $index => $col) {
+            $width = mb_strwidth($col); // 计算字符串宽度
+            if (!isset($widths[$index]) || $width > $widths[$index]) {
+                $widths[$index] = $width; // 保留列最大宽度
+            }
+        }
+
+        $table[] = $row;
+    }
+
+    /**
+     * 拼接表格内容
+     */
+    $tableContent = '';
+    foreach($table as $index => $row) {
+        $tableContent .= table_format_row($row, $widths) . PHP_EOL;
+
+        if ($index == 0) { // 追加表头分割线
+            $cols = array_map(function ($width) { return str_repeat('-', $width); }, $widths);
+            $tableContent .= table_format_row($cols, $widths) . PHP_EOL;
+        }
+    }
+    
+    $content .= "- **{$key}**" . PHP_EOL . PHP_EOL . $tableContent . PHP_EOL;
+}
+
+echo trim($content, PHP_EOL) . PHP_EOL;

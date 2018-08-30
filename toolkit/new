@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+$config = require 'config.php';
+
+/**
+ * 获取日期信息
+ */
+$date = new DateTime(
+    isset($argv[1]) ? $argv[1] . ' week' : ''
+);
+
+/**
+ * 拼接文件路径
+ */
+$file = $config['directory'] . DIRECTORY_SEPARATOR . $date->format($config['file_name']) . $config['file_extension'];
+echo $file . PHP_EOL;
+
+if(file_exists($file)) {
+    echo 'File already exists!' . PHP_EOL;
+    exit(127);
+}
+
+/**
+ * 拼接内容
+ */
+$week = $date->format("W");
+$year = $date->format("Y");
+$monday = $date->modify('monday this week')->format('n月j日');
+$sunday = $date->modify('sunday this week')->format('n月j日');
+
+ob_start();
+require 'stubs/report.php';
+$template = ob_get_clean();
+
+/**
+ * 输出到文件
+ */
+file_put_contents($file, $template);

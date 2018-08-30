@@ -1,0 +1,67 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+$config = require 'config.php';
+$directory = $config['directory'];
+
+/**
+ * 遍历文件
+ */
+$files = glob($directory . DIRECTORY_SEPARATOR . '*' . $config['file_extension']);
+$content = '';
+$lastYear = 0;
+$lastMonth = 0;
+
+foreach($files as $file)
+{
+    /**
+     * 获取日期信息
+     */
+    $date = $config['file_to_datetime']($file);
+    if ($date == null) {
+        continue;
+    }
+
+    /**
+     * 计算代码行数
+     */
+    $lines = stat_code_lines($file);
+
+    /**
+     * 拼接内容
+     */
+    $week = $date->format('W');
+    $year = $date->format('Y');
+    $month = $date->format('n');
+    $monday = $date->modify('monday this week')->format('n月j日');
+    $sunday = $date->modify('sunday this week')->format('n月j日');
+
+    if($year != $lastYear || $month != $lastMonth)
+    {
+        $lastYear = $year;
+        $lastMonth = $month;
+        if ($content != '') {
+            $content .= PHP_EOL;
+        }
+
+        $content .= "### {$year} 年 {$month} 月份" . PHP_EOL . PHP_EOL;
+    }
+
+    setlocale(LC_ALL, 'zh_CN.GBK');
+    $fileName = basename($file);
+    $content .= "- [第 {$week} 周：{$monday} ~ {$sunday}]({$fileName})（总代码量: {$lines} 行）" . PHP_EOL;
+}
+
+/**
+ * 拼接目录
+ */
+ob_start();
+require 'stubs/toc.php';
+$toc = ob_get_clean();
+
+/**
+ * 输出到文件
+ */
+file_put_contents($config['toc_file'], $toc);

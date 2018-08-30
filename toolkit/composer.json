@@ -1,0 +1,23 @@
+{
+    "name": "wi1dcard/toolkit",
+    "authors": [
+        {
+            "name": "wi1dcard",
+            "email": "yokka47@qq.com"
+        }
+    ],
+    "require": {
+        "cpliakas/git-wrapper": "^2.0"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ]
+    }
+}
