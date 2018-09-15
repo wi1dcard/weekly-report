@@ -100,6 +100,22 @@ php toc
 
 关于 CSS，你可以直接使用 `css/gitee.css`，和码云网页显示效果一致。实际上就是扒的😂，版权归码云官方。
 
+### 周报内容直接复制到剪贴板
+
+列出 macOS 命令，Windows / Linux 同理。
+
+输出到剪贴板：
+
+```bash
+php toolkit/today | pbcopy
+```
+
+输出到剪贴板且在终端展示：
+
+```bash
+php toolkit/today | tee >(pbcopy)
+```
+
 ## 开源协议
 
 MIT
