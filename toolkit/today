@@ -27,7 +27,7 @@ foreach ($projects as $key => $project) {
      */
     $projectPath = $project['path'];
     $projectUrl = $project['url'] ?? '';
-    $pathspec = $project['pathspec'] ?? '';
+    $pathspec = $project['pathspec'] ?? '.';
 
     /**
      * Git log
