@@ -27,13 +27,19 @@ foreach ($projects as $key => $project) {
      */
     $projectPath = $project['path'];
     $projectUrl = $project['url'] ?? '';
-    $pathspec = $project['pathspec'] ?? '.';
+
+    $gitCommand = sprintf(
+        'log --pretty="format:%%h|%%ai|%%s" --branches --no-merges --author="%1$s" --after="%2$s 00:00:00" --until="%2$s 23:59:59" --reverse --shortstat -- . "%3$s"',
+        $author,
+        $logDate,
+        $project['pathspec'] ?? '.'
+    );
 
     /**
      * Git log
      */
     $fullText = $gitWrapper->git(
-        "log --pretty=format:'%h|%ai|%s' --branches --no-merges --author={$author} --after='{$logDate} 00:00:00' --until='{$logDate} 23:59:59' --reverse --shortstat -- . '{$pathspec}'",
+        $gitCommand,
         $projectPath
     );
     
