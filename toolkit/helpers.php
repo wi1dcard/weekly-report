@@ -83,11 +83,11 @@ function get_remote_url($path)
     $url = trim(
         (new GitWrapper\GitWrapper())->git('ls-remote --get-url origin', $path)
     );
-    $url = preg_replace('/^git@(.*?):(.*?).git$/i', 'http://$1/$2', $url);
-    if (starts_with($url, ['http', 'https'])) {
-        return $url;
+    $url = preg_match('/^(.+?)(@)?(?(2)(.+?)|):(.*?)\.git$/i', $url, $matches);
+    if ($matches[2]) {
+        return 'http://' . $matches[3] . '/' . $matches[4];
     }
-    return null;
+    return $matches[1] . ':' . $matches[4];
 }
 
 /**
